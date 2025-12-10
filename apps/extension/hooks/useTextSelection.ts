@@ -28,12 +28,13 @@ type TextSelectionState = {
 	clientRect?: ClientRect;
 	isCollapsed?: boolean;
 	textContent?: string;
+	range?: Range;
 };
 
 const defaultState: TextSelectionState = {};
 
 export function useTextSelection(target?: HTMLElement) {
-	const [{ clientRect, isCollapsed, textContent }, setState] =
+	const [{ clientRect, isCollapsed, textContent, range }, setState] =
 		useState<TextSelectionState>(defaultState);
 
 	const handler = useCallback(() => {
@@ -83,6 +84,7 @@ export function useTextSelection(target?: HTMLElement) {
 			}
 
 			return {
+				range,
 				clientRect: newRect,
 				textContent: newTextContent,
 				isCollapsed: range.collapsed,
@@ -108,5 +110,6 @@ export function useTextSelection(target?: HTMLElement) {
 		clientRect,
 		isCollapsed,
 		textContent,
+		range,
 	};
 }
