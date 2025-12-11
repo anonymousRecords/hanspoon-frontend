@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useState } from "react";
 
-type ClientRect = Record<keyof Omit<DOMRect, "toJSON">, number>;
+export type ClientRect = Record<keyof Omit<DOMRect, "toJSON">, number>;
 
 function roundValues(_rect: ClientRect) {
 	const rect = { ..._rect };
