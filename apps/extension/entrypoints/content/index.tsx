@@ -1,6 +1,7 @@
 import "./style.css";
 import ReactDOM from "react-dom/client";
 import Toolbar from "@/components/toolbar/Toolbar";
+import { restoreHighlights } from "@/lib/highlight/restore";
 
 export default defineContentScript({
 	matches: ["<all_urls>"],
@@ -8,6 +9,9 @@ export default defineContentScript({
 
 	async main(ctx) {
 		console.log("HELLO");
+
+		restoreHighlights();
+
 		const ui = await createShadowRootUi(ctx, {
 			name: "hanspoon-toolbar",
 			position: "inline",

@@ -1,13 +1,26 @@
-import { useTextSelection } from "@/hooks/useTextSelection";
-import { applyHighlight } from "@/utils/highlight/serialization";
+import { type ClientRect, useTextSelection } from "@/hooks/useTextSelection";
+import { applyHighlight } from "@/lib/highlight/highlight";
+import { removeHighlight } from "@/lib/highlight/remove";
 
 const Toolbar = () => {
 	const { clientRect, isCollapsed, range } = useTextSelection();
+	const { clickedHighlight, clearHighlightSelection } = useHighlightSelection();
 
-	if (isCollapsed || !clientRect || !range) return null;
+	const isNotSelected = clientRect === undefined;
 
-	const top = clientRect.top + window.scrollY - 50;
-	const left = clientRect.left + clientRect.width / 2 + window.scrollX;
+	if (isNotSelected) {
+		return null;
+	}
+
+	const isCreationMode = !isCollapsed && range !== undefined;
+	const isEditMode = clickedHighlight !== null;
+
+	if (!isCreationMode && !isEditMode) {
+		return null;
+	}
+
+	const targetRect = isEditMode ? clickedHighlight.rect : clientRect;
+	const { top, left } = calculatePosition(targetRect);
 
 	return (
 		<div
@@ -21,16 +34,68 @@ const Toolbar = () => {
 				padding: "8px 12px",
 				borderRadius: "8px",
 				zIndex: 9999,
-				cursor: "pointer",
+				display: "flex",
+				alignItems: "center",
+				gap: "8px",
+				fontSize: "14px",
 			}}
 		>
-			<button type="button" onClick={() => applyHighlight(range)}>
-				하이라이트
+			{isCreationMode ? (
+				<button
+					type="button"
+					onClick={() => {
+						applyHighlight(range);
+					}}
+					style={{
+						background: "none",
+						border: "none",
+						cursor: "pointer",
+					}}
+				>
+					하이라이트
+				</button>
+			) : (
+				<button
+					type="button"
+					onClick={() => {
+						if (clickedHighlight) {
+							removeHighlight(clickedHighlight.id);
+							clearHighlightSelection();
+						}
+					}}
+					style={{
+						background: "none",
+						border: "none",
+						cursor: "pointer",
+					}}
+				>
+					하이라이트 취소
+				</button>
+			)}
+			<span style={{ opacity: 0.5 }}>|</span>
+			<button
+				type="button"
+				style={{
+					background: "none",
+					border: "none",
+					color: "inherit",
+					cursor: "pointer",
+				}}
+			>
+				메모
 			</button>
-			<span> | </span>
-			<span>메모</span>
 		</div>
 	);
 };
+
+function calculatePosition(targetRect: DOMRect | ClientRect) {
+	const top = targetRect.top + window.scrollY - 50;
+	const left = targetRect.left + targetRect.width / 2 + window.scrollX;
+
+	return {
+		top,
+		left,
+	};
+}
 
 export default Toolbar;
