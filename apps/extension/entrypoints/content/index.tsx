@@ -1,7 +1,7 @@
-import "./style.css";
 import ReactDOM from "react-dom/client";
+import { HighlightRestorer } from "@/components/toolbar/HighlightRestorer";
 import Toolbar from "@/components/toolbar/Toolbar";
-import { restoreHighlights } from "@/lib/highlight/restore";
+import "./style.css";
 
 export default defineContentScript({
 	matches: ["<all_urls>"],
@@ -10,14 +10,17 @@ export default defineContentScript({
 	async main(ctx) {
 		console.log("HELLO");
 
-		restoreHighlights();
-
 		const ui = await createShadowRootUi(ctx, {
 			name: "hanspoon-toolbar",
 			position: "inline",
 			onMount: (container) => {
 				const root = ReactDOM.createRoot(container);
-				root.render(<Toolbar />);
+				root.render(
+					<>
+						<HighlightRestorer />
+						<Toolbar />
+					</>,
+				);
 				return root;
 			},
 		});
