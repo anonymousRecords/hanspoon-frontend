@@ -1,4 +1,4 @@
-import { removeHighlightFromStorage } from "@/store/store";
+import { removeHighlightFromDB } from "@/models/highlight-storage";
 import { CAMEL_DATASET_IDENTIFIER } from "./const";
 import { camelToKebab } from "./kebab";
 
@@ -27,7 +27,6 @@ export const removeHighlight = (id: string) => {
 		parent.normalize();
 	});
 
-	removeHighlightFromStorage(id);
-
+	removeHighlightFromDB(id);
 	window.getSelection()?.removeAllRanges();
 };

@@ -1,18 +1,22 @@
-import { STORAGE_KEY } from "@/store/store";
+import { useHighlights } from "@/hooks/useHighlights";
 import { deserializeRange } from "./deserialization";
 import { applyHighlight } from "./highlight";
 import type { SerializedHighlight } from "./types";
 
-export const restoreHighlights = () => {
-	const dataString = localStorage.getItem(STORAGE_KEY);
-	if (!dataString) return;
-
+export const restoreHighlights = async () => {
+	const highlights = await useHighlights();
 	try {
-		const savedHighlights: SerializedHighlight[] = JSON.parse(dataString);
-
-		savedHighlights.forEach((data) => {
+		if (!highlights) return;
+		const serializedHighlights: SerializedHighlight[] = highlights.map(
+			(highlight) => ({
+				id: highlight.id,
+				start: highlight.start,
+				end: highlight.end,
+				text: highlight.text,
+			}),
+		);
+		serializedHighlights.forEach((data) => {
 			const range = deserializeRange(data);
-
 			if (range) {
 				applyHighlight(range, data.id);
 			} else {
@@ -20,6 +24,6 @@ export const restoreHighlights = () => {
 			}
 		});
 	} catch (e) {
-		console.error("하이라이트 데이터 파싱 에러", e);
+		console.error("하이라이트 데이터 처리 중 에러 발생", e);
 	}
 };

@@ -1,4 +1,4 @@
-import { saveHighlightToStorage } from "@/store/store";
+import { saveHighlightToDB } from "@/models/highlight-storage";
 import { CAMEL_DATASET_IDENTIFIER, DATASET_IDENTIFIER } from "./const";
 import { serializeRange } from "./serialization";
 
@@ -35,7 +35,7 @@ export const applyHighlight = (range: Range, savedId?: string) => {
 
 	if (!savedId) {
 		const serializedData = serializeRange(range, uniqueId, document.body);
-		saveHighlightToStorage(serializedData);
+		saveHighlightToDB(serializedData);
 	}
 
 	textNodes.forEach((textNode) => {
