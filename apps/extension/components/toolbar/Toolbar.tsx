@@ -1,6 +1,8 @@
 import { type ClientRect, useTextSelection } from "@/hooks/useTextSelection";
-import { applyHighlight } from "@/lib/highlight/highlight";
+import { appendHighlightTag, generateId } from "@/lib/highlight/highlight";
 import { removeHighlight } from "@/lib/highlight/remove";
+import { serializeRange } from "@/lib/highlight/serialization";
+import { saveHighlightToDB } from "@/models/highlight-storage";
 
 const Toolbar = () => {
 	const { clientRect, isCollapsed, range } = useTextSelection();
@@ -43,8 +45,11 @@ const Toolbar = () => {
 			{isCreationMode ? (
 				<button
 					type="button"
-					onClick={() => {
-						applyHighlight(range);
+					onClick={async () => {
+						const id = generateId();
+						const serializedData = serializeRange(range, id, document.body);
+						await saveHighlightToDB(serializedData);
+						appendHighlightTag(range, id);
 					}}
 					style={{
 						background: "none",

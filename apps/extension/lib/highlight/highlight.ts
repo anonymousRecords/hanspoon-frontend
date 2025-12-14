@@ -1,6 +1,4 @@
-import { saveHighlightToDB } from "@/models/highlight-storage";
 import { CAMEL_DATASET_IDENTIFIER, DATASET_IDENTIFIER } from "./const";
-import { serializeRange } from "./serialization";
 
 function getTextNodesInRange(range: Range) {
 	if (range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
@@ -28,15 +26,12 @@ function getTextNodesInRange(range: Range) {
 	return textNodes;
 }
 
-export const applyHighlight = (range: Range, savedId?: string) => {
+export const generateId = () => {
+	return `${DATASET_IDENTIFIER}-${Date.now()}`;
+};
+
+export const appendHighlightTag = (range: Range, savedId: string) => {
 	const textNodes = getTextNodesInRange(range);
-
-	const uniqueId = savedId || `${DATASET_IDENTIFIER}-${Date.now()}`;
-
-	if (!savedId) {
-		const serializedData = serializeRange(range, uniqueId, document.body);
-		saveHighlightToDB(serializedData);
-	}
 
 	textNodes.forEach((textNode) => {
 		const startOffset =
@@ -48,7 +43,7 @@ export const applyHighlight = (range: Range, savedId?: string) => {
 
 		const wrapper = document.createElement("span");
 		wrapper.style.backgroundColor = "#E9D2FD";
-		wrapper.dataset[CAMEL_DATASET_IDENTIFIER] = uniqueId;
+		wrapper.dataset[CAMEL_DATASET_IDENTIFIER] = savedId;
 
 		if (endOffset < (textNode.textContent?.length || 0)) {
 			(textNode as Text).splitText(endOffset);

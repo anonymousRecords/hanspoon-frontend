@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useHighlights } from "@/hooks/useHighlights";
 import { deserializeRange } from "@/lib/highlight/deserialization";
-import { applyHighlight } from "@/lib/highlight/highlight";
+import { appendHighlightTag } from "@/lib/highlight/highlight";
 import type { SerializedHighlight } from "@/lib/highlight/types";
 
 export function HighlightRestorer() {
@@ -14,7 +14,7 @@ export function HighlightRestorer() {
 			highlights.forEach((data: SerializedHighlight) => {
 				const range = deserializeRange(data);
 				if (range) {
-					applyHighlight(range, data.id);
+					appendHighlightTag(range, data.id);
 				} else {
 					console.warn(`복구 실패: ${data.id} (DOM이 변경되었을 수 있음)`);
 				}
