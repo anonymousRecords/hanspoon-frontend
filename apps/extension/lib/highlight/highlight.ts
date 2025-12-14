@@ -3,11 +3,11 @@ import { CAMEL_DATASET_IDENTIFIER, DATASET_IDENTIFIER } from "./const";
 function getTextNodesInRange(range: Range) {
 	if (range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
 		return range.intersectsNode(range.commonAncestorContainer)
-			? [range.commonAncestorContainer]
+			? [range.commonAncestorContainer as Text]
 			: [];
 	}
 
-	const textNodes: Node[] = [];
+	const textNodes: Text[] = [];
 	const walker = document.createTreeWalker(
 		range.commonAncestorContainer,
 		NodeFilter.SHOW_TEXT,
@@ -21,7 +21,7 @@ function getTextNodesInRange(range: Range) {
 	);
 
 	while (walker.nextNode()) {
-		textNodes.push(walker.currentNode);
+		textNodes.push(walker.currentNode as Text);
 	}
 	return textNodes;
 }
@@ -39,17 +39,17 @@ export const appendHighlightTag = (range: Range, savedId: string) => {
 		const endOffset =
 			textNode === range.endContainer
 				? range.endOffset
-				: textNode.textContent?.length || 0;
+				: textNode.textContent.length;
 
 		const wrapper = document.createElement("span");
 		wrapper.style.backgroundColor = "#E9D2FD";
 		wrapper.dataset[CAMEL_DATASET_IDENTIFIER] = savedId;
 
-		if (endOffset < (textNode.textContent?.length || 0)) {
-			(textNode as Text).splitText(endOffset);
+		if (endOffset < textNode.textContent.length) {
+			textNode.splitText(endOffset);
 		}
 		if (startOffset > 0) {
-			const targetText = (textNode as Text).splitText(startOffset);
+			const targetText = textNode.splitText(startOffset);
 			textNode.parentNode?.insertBefore(wrapper, targetText);
 			wrapper.appendChild(targetText);
 		} else {
