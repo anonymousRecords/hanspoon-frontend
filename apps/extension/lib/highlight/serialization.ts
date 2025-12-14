@@ -80,11 +80,15 @@ const getDomMeta = (
 	};
 };
 
-export const serializeRange = (
-	range: Range,
-	id: string,
-	$root: HTMLElement = document.body,
-): SerializedHighlight => {
+export const serializeRange = ({
+	range,
+	id,
+	$root = document.body,
+}: {
+	range: Range;
+	id: string;
+	$root?: HTMLElement;
+}): SerializedHighlight => {
 	const startMeta = getDomMeta(range.startContainer, range.startOffset, $root);
 	const endMeta = getDomMeta(range.endContainer, range.endOffset, $root);
 

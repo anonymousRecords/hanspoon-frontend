@@ -47,7 +47,11 @@ const Toolbar = () => {
 					type="button"
 					onClick={async () => {
 						const id = generateId();
-						const serializedData = serializeRange(range, id, document.body);
+						const serializedData = serializeRange({
+							range,
+							id,
+							$root: document.body,
+						});
 						await saveHighlightToDB(serializedData);
 						appendHighlightTag(range, id);
 					}}
