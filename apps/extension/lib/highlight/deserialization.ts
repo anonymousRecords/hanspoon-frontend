@@ -26,11 +26,13 @@ const getPointFromMeta = (meta: DomMeta, $root: HTMLElement) => {
 	return null;
 };
 
-export const deserializeRange = (data: SerializedHighlight): Range | null => {
+export const deserializeRange = (data: SerializedHighlight): Range => {
 	const startPoint = getPointFromMeta(data.start, document.body);
 	const endPoint = getPointFromMeta(data.end, document.body);
 
-	if (!startPoint || !endPoint) return null;
+	if (!startPoint || !endPoint) {
+		throw new Error(`복구 실패: ${data.id} (DOM이 변경되었을 수 있음)`);
+	}
 
 	const range = document.createRange();
 	range.setStart(startPoint.node, startPoint.offset);
