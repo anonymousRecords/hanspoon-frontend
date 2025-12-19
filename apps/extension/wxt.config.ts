@@ -8,7 +8,16 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 	}),
 	manifest: {
-		permissions: ["tabs"],
+		permissions: ["storage", "tabs", "identity"],
+		externally_connectable: {
+			ids: ["dclfepbfjokpcpdklodeljlhbmbmcjjb"],
+			matches: ["http://localhost:5173/*"],
+		},
 		host_permissions: ["http://*/*", "https://*/*"],
+	},
+
+	// TODO: Remove this before production
+	webExt: {
+		chromiumArgs: ["--disable-blink-features=AutomationControlled"],
 	},
 });
