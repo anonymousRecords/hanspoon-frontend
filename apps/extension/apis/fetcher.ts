@@ -39,6 +39,13 @@ export const getPostById = async (
 	return post;
 };
 
+export const getPostByUrl = async (
+	url: string,
+): Promise<LocalPost | undefined> => {
+	const post = await sendMessage("DB_GET_POST_BY_URL", { url });
+	return post;
+};
+
 export const addPost = async (data: LocalPost) => {
 	const response = await sendMessage("DB_ADD_POST", { postData: data });
 	if (!response?.success) {
