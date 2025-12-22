@@ -18,7 +18,7 @@ const addHightLightBackground = async ({
 		postId: postId,
 		createdAt: Date.now(),
 		updatedAt: Date.now(),
-		shareId: null,
+		shareId: crypto.randomUUID(),
 		isSynced: false,
 	};
 	await db.annotations.add(annotation);

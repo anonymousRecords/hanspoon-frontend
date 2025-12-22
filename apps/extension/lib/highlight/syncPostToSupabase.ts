@@ -39,6 +39,7 @@ export async function syncPostToSupabase(
 		url: post.url,
 		title: post.title,
 		user_id: session.user.id,
+		share_id: post.shareId,
 		updated_at: new Date().toISOString(),
 	});
 
@@ -54,6 +55,8 @@ export async function syncPostToSupabase(
 		end_meta: ann.end,
 		text: ann.text,
 		user_id: session.user.id,
+		share_id: ann.shareId,
+		updated_at: new Date().toISOString(),
 	}));
 
 	const { error: annError } = await supabase
