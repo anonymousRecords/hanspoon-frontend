@@ -4,6 +4,7 @@ import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router";
 import App from "./App.tsx";
 import AuthCallback from "./components/AuthCallback.tsx";
+import Share from "./pages/SharePage.tsx";
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
@@ -13,6 +14,7 @@ if (rootElement) {
 				<Routes>
 					<Route path="/" element={<App />} />
 					<Route path="/auth/callback" element={<AuthCallback />} />
+					<Route path="/share/:shareId" element={<Share />} />
 				</Routes>
 			</BrowserRouter>
 		</StrictMode>,
