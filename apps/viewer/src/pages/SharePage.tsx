@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { useShareId } from "../hooks/useShareId";
 import { annotationQueries } from "../queries/annotationQueries";
 import { postQueries } from "../queries/postQueries";
 import { userInfoQueries } from "../queries/userInfoQueries";
 
 const SharePage = () => {
 	const { data: userInfo } = useQuery(userInfoQueries.detail());
-
-	const currentShareId = window.location.pathname.split("/")[2];
+	const currentShareId = useShareId();
 
 	const {
 		data: annotations,
@@ -71,7 +71,7 @@ const SharePage = () => {
 				}}
 			>
 				<a
-					href={post.id}
+					href={post.url}
 					style={{
 						width: "820px",
 						height: "175px",
