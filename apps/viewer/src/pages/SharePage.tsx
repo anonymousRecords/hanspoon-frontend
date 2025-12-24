@@ -46,7 +46,7 @@ const fetchPost = async (shareId: string) => {
 	return post;
 };
 
-const Share = () => {
+const SharePage = () => {
 	const sessionStr = localStorage.getItem("session");
 	if (!sessionStr) {
 		throw new Error("No session found");
@@ -99,7 +99,6 @@ const Share = () => {
 				}}
 			>
 				<img
-					// src="https://i.pinimg.com/1200x/7d/ef/1e/7def1e13b878405623f041c5b96e7a60.jpg"
 					src={session.user.user_metadata.avatar_url}
 					alt="profile_image"
 					width={184}
@@ -127,7 +126,7 @@ const Share = () => {
 				}}
 			>
 				<a
-					href="https://velog.io/@woohm402/no-mouse-1-vscode"
+					href={post[0].url}
 					style={{
 						width: "820px",
 						height: "175px",
@@ -204,4 +203,4 @@ const Share = () => {
 	);
 };
 
-export default Share;
+export default SharePage;

@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Route, Routes } from "react-router";
 import App from "./App.tsx";
 import AuthCallback from "./components/AuthCallback.tsx";
-import Share from "./pages/SharePage.tsx";
+import SharePage from "./pages/SharePage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +19,7 @@ if (rootElement) {
 					<Routes>
 						<Route path="/" element={<App />} />
 						<Route path="/auth/callback" element={<AuthCallback />} />
-						<Route path="/share/:shareId" element={<Share />} />
+						<Route path="/share/:shareId" element={<SharePage />} />
 					</Routes>
 				</BrowserRouter>
 				<ReactQueryDevtools initialIsOpen={true} />
