@@ -93,6 +93,12 @@ importers:
       react-error-boundary:
         specifier: ^6.0.0
         version: 6.0.0(react@19.2.0)
+      react-grid-layout:
+        specifier: ^2.1.1
+        version: 2.1.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-resizable:
+        specifier: ^3.0.5
+        version: 3.0.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-router:
         specifier: ^7.10.1
         version: 7.10.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -112,6 +118,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.7)
+      '@types/react-grid-layout':
+        specifier: ^1.3.6
+        version: 1.3.6
       '@vitejs/plugin-react':
         specifier: ^5.1.1
         version: 5.1.1(vite@7.2.6(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
@@ -793,6 +802,9 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
+  '@types/react-grid-layout@1.3.6':
+    resolution: {integrity: sha512-Cw7+sb3yyjtmxwwJiXtEXcu5h4cgs+sCGkHwHXsFmPyV30bf14LeD/fa2LwQovuD2HWxCcjIdNhDlcYGj95qGA==}
+
   '@types/react@19.2.7':
     resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
 
@@ -990,6 +1002,10 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   cmd-shim@8.0.0:
     resolution: {integrity: sha512-Jk/BK6NCapZ58BKUxlSI+ouKRbjH1NLZCgJkYoab+vEHUY3f6OzpNBN9u7HFSv9J6TRDGs4PLOHezoKGaFRSCA==}
@@ -1226,6 +1242,9 @@ packages:
 
   exsolve@1.0.8:
     resolution: {integrity: sha512-LmDxfWXwcTArk8fUEnOfSZpHOJ6zOMUJKOtFLFqJLoKJetuQG874Uc7/Kki7zFLzYybmZhp1M7+98pfMqeX8yA==}
+
+  fast-equals@4.0.3:
+    resolution: {integrity: sha512-G3BSX9cfKttjr+2o1O22tYMLq0DPluZnYtq1rXumE1SpL/F/SLIfHx08WYQoWSIpeMYf8sRbJ8++71+v6Pnxfg==}
 
   fast-glob@3.3.3:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
@@ -1633,6 +1652,10 @@ packages:
     resolution: {integrity: sha512-9ie8ItPR6tjY5uYJh8K/Zrv/RMZ5VOlOWvtZdEHYSTFKZfIBPQa9tOAEeAWhd+AnIneLJ22w5fjOYtoutpWq5w==}
     engines: {node: '>=18'}
 
+  loose-envify@1.4.0:
+    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
+
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
@@ -1738,6 +1761,10 @@ packages:
     engines: {node: ^14.16.0 || >=16.10.0}
     hasBin: true
 
+  object-assign@4.1.1:
+    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
+    engines: {node: '>=0.10.0'}
+
   ofetch@1.5.1:
     resolution: {integrity: sha512-2W4oUZlVaqAPAil6FUg/difl6YhqhUR7x2eZY4bQCko22UXg3hptq9KLQdqFClV+Wu85UX7hNtdGTngi/1BxcA==}
 
@@ -1834,6 +1861,9 @@ packages:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
 
+  prop-types@15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
 
@@ -1866,14 +1896,34 @@ packages:
     peerDependencies:
       react: ^19.2.0
 
+  react-draggable@4.5.0:
+    resolution: {integrity: sha512-VC+HBLEZ0XJxnOxVAZsdRi8rD04Iz3SiiKOoYzamjylUcju/hP9np/aZdLHf/7WOD268WMoNJMvYfB5yAK45cw==}
+    peerDependencies:
+      react: '>= 16.3.0'
+      react-dom: '>= 16.3.0'
+
   react-error-boundary@6.0.0:
     resolution: {integrity: sha512-gdlJjD7NWr0IfkPlaREN2d9uUZUlksrfOx7SX62VRerwXbMY6ftGCIZua1VG1aXFNOimhISsTq+Owp725b9SiA==}
     peerDependencies:
       react: '>=16.13.1'
 
+  react-grid-layout@2.1.1:
+    resolution: {integrity: sha512-yIB96q80oUIDcZeML4arNAC8/0Bam9odjdnQwiAhtyL6DpUy69wyLpG0SSTf5oH69FbQn9VlXn6tNbBqBxZROA==}
+    peerDependencies:
+      react: '>= 16.3.0'
+      react-dom: '>= 16.3.0'
+
+  react-is@16.13.1:
+    resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
   react-refresh@0.18.0:
     resolution: {integrity: sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==}
     engines: {node: '>=0.10.0'}
+
+  react-resizable@3.0.5:
+    resolution: {integrity: sha512-vKpeHhI5OZvYn82kXOs1bC8aOXktGU5AmKAgaZS4F5JPburCtbmDPqE7Pzp+1kN4+Wb81LlF33VpGwWwtXem+w==}
+    peerDependencies:
+      react: '>= 16.3'
 
   react-router@7.10.1:
     resolution: {integrity: sha512-gHL89dRa3kwlUYtRQ+m8NmxGI6CgqN+k4XyGjwcFoQwwCWF6xXpOCUlDovkXClS0d0XJN/5q7kc5W3kiFEd0Yw==}
@@ -1915,6 +1965,9 @@ packages:
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
+
+  resize-observer-polyfill@1.5.1:
+    resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}
 
   restore-cursor@5.1.0:
     resolution: {integrity: sha512-oMA2dcrw6u0YfxJQXm342bFKX/E4sG9rbTzO9ptUcR/e8A33cHuvStiYOwH7fszkZlZ1z/ta9AAoPk2F4qIOHA==}
@@ -2920,6 +2973,10 @@ snapshots:
     dependencies:
       '@types/react': 19.2.7
 
+  '@types/react-grid-layout@1.3.6':
+    dependencies:
+      '@types/react': 19.2.7
+
   '@types/react@19.2.7':
     dependencies:
       csstype: 3.2.3
@@ -3135,6 +3192,8 @@ snapshots:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
 
+  clsx@2.1.1: {}
+
   cmd-shim@8.0.0: {}
 
   color-convert@2.0.1:
@@ -3342,6 +3401,8 @@ snapshots:
   eventemitter3@5.0.1: {}
 
   exsolve@1.0.8: {}
+
+  fast-equals@4.0.3: {}
 
   fast-glob@3.3.3:
     dependencies:
@@ -3681,6 +3742,10 @@ snapshots:
       strip-ansi: 7.1.2
       wrap-ansi: 9.0.2
 
+  loose-envify@1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
+
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
@@ -3784,6 +3849,8 @@ snapshots:
       pathe: 2.0.3
       pkg-types: 2.3.0
       tinyexec: 1.0.2
+
+  object-assign@4.1.1: {}
 
   ofetch@1.5.1:
     dependencies:
@@ -3906,6 +3973,12 @@ snapshots:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
+  prop-types@15.8.1:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+
   proto-list@1.2.4: {}
 
   publish-browser-extension@3.0.3:
@@ -3946,12 +4019,40 @@ snapshots:
       react: 19.2.0
       scheduler: 0.27.0
 
+  react-draggable@4.5.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+    dependencies:
+      clsx: 2.1.1
+      prop-types: 15.8.1
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+
   react-error-boundary@6.0.0(react@19.2.0):
     dependencies:
       '@babel/runtime': 7.28.2
       react: 19.2.0
 
+  react-grid-layout@2.1.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+    dependencies:
+      clsx: 2.1.1
+      fast-equals: 4.0.3
+      prop-types: 15.8.1
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+      react-draggable: 4.5.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-resizable: 3.0.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      resize-observer-polyfill: 1.5.1
+
+  react-is@16.13.1: {}
+
   react-refresh@0.18.0: {}
+
+  react-resizable@3.0.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+    dependencies:
+      prop-types: 15.8.1
+      react: 19.2.0
+      react-draggable: 4.5.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+    transitivePeerDependencies:
+      - react-dom
 
   react-router@7.10.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
@@ -3988,6 +4089,8 @@ snapshots:
       rc: 1.2.8
 
   require-directory@2.1.1: {}
+
+  resize-observer-polyfill@1.5.1: {}
 
   restore-cursor@5.1.0:
     dependencies:
