@@ -1,5 +1,6 @@
+import type { Session } from "@supabase/supabase-js";
 import { useEffect } from "react";
-import { supabase } from "../lib/supabase";
+import { fetchAuthSession } from "../apis/auth.api";
 
 const AuthCallback = () => {
 	useEffect(() => {
@@ -9,26 +10,12 @@ const AuthCallback = () => {
 
 		const checkSession = async () => {
 			try {
-				const {
-					data: { session },
-				} = await supabase.auth.getSession();
+				const session = await fetchAuthSession();
+				const { success } = await sendLoginMessage(session);
 
-				if (session === null) {
-					return;
+				if (success) {
+					console.log("익스텐션이 메시지를 잘 받았어요!");
 				}
-
-				chrome.runtime.sendMessage(
-					import.meta.env.VITE_EXTENSION_ID,
-					{
-						type: "LOGIN_SUCCESS" as const,
-						payload: session,
-					},
-					(response: { success: boolean }) => {
-						if (response?.success) {
-							console.log("익스텐션이 메시지를 잘 받았어요!");
-						}
-					},
-				);
 			} catch (error) {
 				console.error("인증 확인 중 오류 발생:", error);
 			}
@@ -49,6 +36,16 @@ const AuthCallback = () => {
 			<div>로그인 처리 중...</div>
 		</div>
 	);
+};
+
+const sendLoginMessage = async (session: Session) => {
+	return await chrome.runtime.sendMessage<
+		{ type: "LOGIN_SUCCESS"; payload: Session },
+		{ success: boolean }
+	>(import.meta.env.VITE_EXTENSION_ID, {
+		type: "LOGIN_SUCCESS" as const,
+		payload: session,
+	});
 };
 
 export default AuthCallback;

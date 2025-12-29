@@ -17,7 +17,7 @@ export const Profile = () => {
 			}}
 		>
 			<img
-				src={userInfo.user.user_metadata.avatar_url}
+				src={userInfo.user_metadata.avatar_url}
 				alt="profile_image"
 				width={184}
 				height={184}
@@ -27,7 +27,7 @@ export const Profile = () => {
 				}}
 			/>
 			<h1 style={{ fontSize: "44px", fontWeight: "bold" }}>
-				{userInfo.user.user_metadata.full_name}
+				{userInfo.user_metadata.full_name}
 			</h1>
 			<p style={{ fontSize: "20px", color: "#565656", width: "400px" }}>
 				📚 Haebom의 아카이브에 오신 걸 환영합니다.---IT 💻, 경제 💰, 인문학
