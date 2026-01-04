@@ -5,7 +5,8 @@ export const test = base.extend<{
 	context: BrowserContext;
 	extensionId: string;
 }>({
-	context: async (_, use) => {
+	// biome-ignore lint/correctness/noEmptyPattern: false positive
+	context: async ({}, use) => {
 		const pathToExtension = path.resolve(".output/chrome-mv3");
 
 		const context = await chromium.launchPersistentContext("", {
@@ -21,7 +22,9 @@ export const test = base.extend<{
 	},
 	extensionId: async ({ context }, use) => {
 		let [background] = context.serviceWorkers();
-		if (!background) background = await context.waitForEvent("serviceworker");
+		if (!background) {
+			background = await context.waitForEvent("serviceworker");
+		}
 
 		const extensionId = background.url().split("/")[2];
 		await use(extensionId);

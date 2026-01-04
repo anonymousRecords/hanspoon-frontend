@@ -15,6 +15,7 @@ export const CreationModeUI = ({
 
 	return (
 		<div
+			data-testid="highlight-toolbar"
 			style={{
 				position: "absolute",
 				top: `${top}px`,
@@ -32,6 +33,7 @@ export const CreationModeUI = ({
 			}}
 		>
 			<button
+				data-testid="highlight-button"
 				type="button"
 				onClick={async () => {
 					try {

@@ -13,6 +13,7 @@ export const EditModeUI = () => {
 
 	return (
 		<div
+			data-testid="highlight-toolbar"
 			style={{
 				position: "absolute",
 				top: `${top}px`,
@@ -30,6 +31,7 @@ export const EditModeUI = () => {
 			}}
 		>
 			<button
+				data-testid="highlight-button"
 				type="button"
 				onClick={async () => {
 					if (clickedHighlight) {
