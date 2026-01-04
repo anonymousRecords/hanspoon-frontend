@@ -6,6 +6,16 @@ export default defineConfig({
 	modules: ["@wxt-dev/module-react"],
 	vite: () => ({
 		plugins: [tailwindcss()],
+		// TODO: Remove any type
+		build: {
+			minify: "terser",
+			terserOptions: {
+				compress: {
+					drop_console: true,
+					drop_debugger: true,
+				},
+			} as any,
+		},
 	}),
 	manifest: {
 		permissions: ["storage", "tabs", "identity"],
