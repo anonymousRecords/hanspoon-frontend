@@ -1,13 +1,24 @@
-interface LibraryFloatingButtonInterface {
+interface ShareFloatingButtonInterface {
 	isHovered: boolean;
+	isOpen: boolean;
+	setIsOpen: (value: boolean) => void;
+	hasMoved: boolean;
 }
 
-export const LibraryFloatingButton = ({
+export const ShareFloatingButton = ({
 	isHovered,
-}: LibraryFloatingButtonInterface) => {
+	isOpen,
+	setIsOpen,
+	hasMoved,
+}: ShareFloatingButtonInterface) => {
 	return (
 		<button
 			type="button"
+			onClick={() => {
+				if (!hasMoved) {
+					setIsOpen(!isOpen);
+				}
+			}}
 			style={{
 				width: "48px",
 				height: "48px",
@@ -26,7 +37,7 @@ export const LibraryFloatingButton = ({
 				pointerEvents: isHovered ? "auto" : "none",
 			}}
 		>
-			📖
+			🔗
 		</button>
 	);
 };

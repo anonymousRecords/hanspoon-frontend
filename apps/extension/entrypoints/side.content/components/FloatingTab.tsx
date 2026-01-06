@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDrag } from "../hooks/useDrag";
 import { useSidePanel } from "../hooks/useSidePanel";
 import { HanspoonFloatingButton } from "./floating-button/haspoon-floating-button";
-import { LibraryFloatingButton } from "./floating-button/library-floating-button";
+import { ShareFloatingButton } from "./floating-button/share-floating-button";
 import { SidePanel } from "./side-panel/SidePanel";
 
 export const FloatingTab = () => {
@@ -20,7 +20,7 @@ export const FloatingTab = () => {
 				style={{
 					position: "fixed",
 					top: `${yRatio * 100}vh`,
-					right: isOpen ? `${sideWidth + 20}px` : "0px",
+					right: isOpen ? `${sideWidth}px` : "0px",
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "flex-end",
@@ -30,14 +30,19 @@ export const FloatingTab = () => {
 					transition: isDragging ? "none" : "right 0.3s ease",
 				}}
 			>
-				<LibraryFloatingButton isHovered={isHovered} />
+				<ShareFloatingButton
+					isHovered={isHovered}
+					isOpen={isOpen}
+					setIsOpen={setIsOpen}
+					hasMoved={hasMoved}
+				/>
 
 				<HanspoonFloatingButton
 					isHover={isHovered}
 					handleMouseDown={handleMouseDown}
-					setIsOpen={setIsOpen}
 					isDragging={isDragging}
 					isOpen={isOpen}
+					setIsOpen={setIsOpen}
 					hasMoved={hasMoved}
 				/>
 			</div>
