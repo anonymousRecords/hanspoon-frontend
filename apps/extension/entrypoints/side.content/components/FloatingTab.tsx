@@ -2,15 +2,27 @@ import { HanspoonFloatingButton } from "./floating-button/haspoon-floating-butto
 import { LibraryFloatingButton } from "./floating-button/library-floating-button";
 import { SidePanel } from "./side-panel/SidePanel";
 
+const TOP_GAP = 30;
+const BOTTOM_GAP = 200;
+const DRAG_THRESHOLD = 5;
+
 export const FloatingTab = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [sideWidth] = useState(400);
+
 	const [isHovered, setIsHovered] = useState(false);
-	const [yRatio, setYRatio] = useState(0.5);
 	const [isDragging, setIsDragging] = useState(false);
+	const [hasMoved, setHasMoved] = useState(false);
+
+	const [yRatio, setYRatio] = useState(0.5);
 	const startYRef = useRef(0);
 	const startPositionRatioRef = useRef(0);
-	const [hasMoved, setHasMoved] = useState(false);
+
+	const handleMouseDown = (e: React.MouseEvent) => {
+		startYRef.current = e.clientY;
+		startPositionRatioRef.current = yRatio;
+		setIsDragging(true);
+	};
 
 	useEffect(() => {
 		if (!isDragging) return;
@@ -20,16 +32,17 @@ export const FloatingTab = () => {
 			const deltaY = e.clientY - startYRef.current;
 
 			const newY = Math.max(
-				30,
-				Math.min(
-					window.innerHeight - 200,
-					initialY + deltaY,
-				),
+				TOP_GAP,
+				Math.min(window.innerHeight - BOTTOM_GAP, initialY + deltaY),
 			);
 
-			const newPosition = newY / window.innerHeight;
+			const newYRatio = newY / window.innerHeight;
 
-			setYRatio(newPosition);
+			setYRatio(newYRatio);
+
+			if (!hasMoved && Math.abs(e.clientY - startYRef.current) > DRAG_THRESHOLD) {
+				setHasMoved(true);
+			}
 		};
 
 		const handleMouseUp = () => {
@@ -76,33 +89,6 @@ export const FloatingTab = () => {
 		};
 	}, [isOpen, sideWidth]);
 
-	const handleButtonDragStart = (e: React.MouseEvent) => {
-		startYRef.current = e.clientY;
-		startPositionRatioRef.current = yRatio;
-
-		setIsDragging(true);
-
-		let moved = false;
-
-		const handleMouseMove = (moveEvent: MouseEvent) => {
-			if (Math.abs(moveEvent.clientY - e.clientY) > 5) {
-				moved = true;
-				setHasMoved(true);
-			}
-		};
-
-		const handleMouseUp = () => {
-			document.removeEventListener("mousemove", handleMouseMove);
-			document.removeEventListener("mouseup", handleMouseUp);
-			if (!moved) {
-				setIsDragging(false);
-			}
-		};
-
-		document.addEventListener("mousemove", handleMouseMove);
-		document.addEventListener("mouseup", handleMouseUp);
-	};
-
 	return (
 		<div style={{ fontFamily: "system-ui" }}>
 			{/** biome-ignore lint/a11y/noStaticElementInteractions: static */}
@@ -126,7 +112,7 @@ export const FloatingTab = () => {
 
 				<HanspoonFloatingButton
 					isHover={isHovered}
-					handleMouseDown={handleButtonDragStart}
+					handleMouseDown={handleMouseDown}
 					setIsOpen={setIsOpen}
 					isDragging={isDragging}
 					isOpen={isOpen}
