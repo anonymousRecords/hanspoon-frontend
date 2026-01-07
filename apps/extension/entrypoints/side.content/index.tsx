@@ -1,6 +1,7 @@
 import { Provider } from "jotai";
 import ReactDOM from "react-dom/client";
 import { FloatingTab } from "./components/FloatingTab";
+import "./style.css";
 
 export default defineContentScript({
 	matches: ["*://*/*"],

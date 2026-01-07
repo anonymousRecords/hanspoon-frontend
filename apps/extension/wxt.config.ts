@@ -24,6 +24,12 @@ export default defineConfig({
 			matches: ["http://localhost:5173/*"],
 		},
 		host_permissions: ["http://*/*", "https://*/*"],
+		web_accessible_resources: [
+			{
+				resources: ["content-scripts/*.css"],
+				matches: ["<all_urls>"],
+			},
+		],
 	},
 
 	// TODO: Remove this before production
