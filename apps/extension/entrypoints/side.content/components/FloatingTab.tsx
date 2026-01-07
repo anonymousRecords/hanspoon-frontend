@@ -21,7 +21,7 @@ export const FloatingTab = () => {
 
 	const [isHovered, setIsHovered] = useState(false);
 	const [activeTab, setActiveTab] = useState<TabType>("hanspoon");
-	const [showDebug, setShowDebug] = useState(true);
+	const [showDebug, setShowDebug] = useState(false);
 
 	if (!isLoaded) {
 		return (

@@ -1,4 +1,5 @@
 import type { TabType } from "../FloatingTab";
+import { SidePanelPostList } from "./SidePanelPostList";
 
 interface SidePanelProps {
 	sideWidth: number;
@@ -65,9 +66,11 @@ export const SidePanel = ({
 					overflowY: "auto",
 				}}
 			>
-				{activeTab === "share"
-					? "ShareFloatingButton입니다."
-					: "HanspoonFloatingButton입니다."}
+				{activeTab === "share" ? (
+					<div>ShareFloatingButton입니다.</div>
+				) : (
+					<SidePanelPostList />
+				)}
 			</div>
 		</div>
 	);

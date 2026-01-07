@@ -34,6 +34,11 @@ export const getAllHighlights = async (): Promise<
 	return highlights;
 };
 
+export const getAllPosts = async (): Promise<LocalPost[] | undefined> => {
+	const allPosts = await sendMessage("DB_GET_ALL_POSTS", undefined);
+	return allPosts;
+};
+
 export const getPostById = async (
 	id: string,
 ): Promise<LocalPost | undefined> => {

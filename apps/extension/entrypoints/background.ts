@@ -40,6 +40,10 @@ const getPostByUrlBackground = async (url: string) => {
 	return await db.posts.where("url").equals(url).first();
 };
 
+const getAllPostsBackground = async () => {
+	return await db.posts.toArray();
+};
+
 const addPostBackground = async (data: LocalPost) => {
 	await db.posts.add(data);
 };
@@ -74,6 +78,11 @@ export default defineBackground({
 			const { url } = message.data;
 			const post = await getPostByUrlBackground(url);
 			return post;
+		});
+
+		onMessage("DB_GET_ALL_POSTS", async () => {
+			const posts = await getAllPostsBackground();
+			return posts;
 		});
 
 		onMessage("DB_ADD_POST", async (message) => {
