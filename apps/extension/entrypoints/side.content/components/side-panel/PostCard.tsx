@@ -1,6 +1,28 @@
 import type { LocalPost } from "@/lib/highlight/types";
+import menuDots from "../../../../public/menu-dots.svg";
+import { Dropdown, type DropdownMenuItem } from "../common/Dropdown";
 
 export const PostCard = ({ post }: { post: LocalPost }) => {
+	const menuItems: DropdownMenuItem[] = [
+		{
+			label: "publish",
+			onClick: () => {
+				console.log("publish 클릭", post.id);
+			},
+		},
+		{
+			label: "copy link",
+			onClick: () => {
+				console.log("copy link", post.id);
+			},
+		},
+		{
+			label: "view site",
+			onClick: () => {
+				console.log("view site", post.id);
+			},
+		},
+	];
 	return (
 		/** biome-ignore lint/a11y/useKeyWithClickEvents: Post card click handler */
 		/** biome-ignore lint/a11y/noStaticElementInteractions: Post card clickable */
@@ -28,30 +50,45 @@ export const PostCard = ({ post }: { post: LocalPost }) => {
 			<div
 				style={{
 					display: "flex",
+					justifyContent: "space-between",
 					alignItems: "center",
-					gap: "8px",
 					marginBottom: "8px",
 				}}
 			>
-				{post.favIconUrl && (
-					<img
-						src={post.favIconUrl}
-						alt=""
+				<div style={{ display: "flex", gap: "4px" }}>
+					{post.favIconUrl && (
+						<img
+							src={post.favIconUrl}
+							alt=""
+							style={{
+								width: "16px",
+								height: "16px",
+								borderRadius: "2px",
+							}}
+						/>
+					)}
+					<div
 						style={{
-							width: "16px",
-							height: "16px",
-							borderRadius: "2px",
+							fontSize: "12px",
+							color: "#6b7280",
 						}}
-					/>
-				)}
-				<div
-					style={{
-						fontSize: "12px",
-						color: "#6b7280",
-					}}
-				>
-					{post.sourceDomain}
+					>
+						{post.sourceDomain}
+					</div>
 				</div>
+				<Dropdown
+					trigger={
+						<img
+							src={menuDots}
+							width={12}
+							height={12}
+							alt="menu-dot"
+							style={{ cursor: "pointer" }}
+						/>
+					}
+					items={menuItems}
+					position="bottom-right"
+				/>
 			</div>
 			<div
 				style={{
