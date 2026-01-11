@@ -9,7 +9,7 @@ export class AppDB extends Dexie {
 		super("HanspoonDB");
 
 		this.version(1).stores({
-			posts: "id, url, updatedAt",
+			posts: "id, url, updatedAt, isPublished",
 			annotations: "id, postId, shareId",
 		});
 	}

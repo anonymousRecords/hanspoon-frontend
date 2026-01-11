@@ -24,5 +24,6 @@ export function extractPostData(): LocalPost {
 		plainText: document.body.innerText,
 		shareId: crypto.randomUUID(),
 		isSynced: false,
+		isPublished: false,
 	};
 }

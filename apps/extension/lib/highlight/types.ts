@@ -39,4 +39,5 @@ export interface LocalPost {
 	plainText: string;
 	shareId: string | null;
 	isSynced: boolean;
+	isPublished: boolean;
 }
