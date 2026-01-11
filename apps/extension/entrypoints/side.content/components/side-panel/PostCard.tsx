@@ -1,28 +1,12 @@
 import type { LocalPost } from "@/lib/highlight/types";
-import menuDots from "../../../../public/menu-dots.svg";
-import { Dropdown, type DropdownMenuItem } from "../common/Dropdown";
+import { useSession } from "../../hooks/useSession";
+import { CardMoreAuthDropdown } from "./CardMoreAuthDropdown";
+import { CardMoreGuestDropdown } from "./CardMoreGuestDropdown";
 
 export const PostCard = ({ post }: { post: LocalPost }) => {
-	const menuItems: DropdownMenuItem[] = [
-		{
-			label: "publish",
-			onClick: () => {
-				console.log("publish 클릭", post.id);
-			},
-		},
-		{
-			label: "copy link",
-			onClick: () => {
-				console.log("copy link", post.id);
-			},
-		},
-		{
-			label: "view site",
-			onClick: () => {
-				console.log("view site", post.id);
-			},
-		},
-	];
+	const { session } = useSession();
+	const isLoggedIn = !!session;
+
 	return (
 		/** biome-ignore lint/a11y/useKeyWithClickEvents: Post card click handler */
 		/** biome-ignore lint/a11y/noStaticElementInteractions: Post card clickable */
@@ -76,19 +60,7 @@ export const PostCard = ({ post }: { post: LocalPost }) => {
 						{post.sourceDomain}
 					</div>
 				</div>
-				<Dropdown
-					trigger={
-						<img
-							src={menuDots}
-							width={12}
-							height={12}
-							alt="menu-dot"
-							style={{ cursor: "pointer" }}
-						/>
-					}
-					items={menuItems}
-					position="bottom-right"
-				/>
+				{isLoggedIn ? <CardMoreAuthDropdown /> : <CardMoreGuestDropdown />}
 			</div>
 			<div
 				style={{
