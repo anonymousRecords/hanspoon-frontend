@@ -11,7 +11,7 @@ export const SidePanelPostList = () => {
 	useEffect(() => {
 		const channel = getBroadcastChannel();
 		channel.onMessage((message) => {
-			if (message.type === "POST_ADDED") {
+			if (message.type === "POST_ADDED" || message.type === "POST_DELETED") {
 				setRefreshKey((prev) => prev + 1);
 			}
 		});

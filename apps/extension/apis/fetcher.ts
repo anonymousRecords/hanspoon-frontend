@@ -119,6 +119,12 @@ export const deletePost = async (postId: string) => {
 	if (!response?.success) {
 		throw new Error(`DB Error: Post delete failed`);
 	}
+
+	getBroadcastChannel().postMessage({
+		type: "POST_DELETED",
+		postId,
+		timestamp: performance.timeOrigin + performance.now(),
+	});
 };
 
 export const deleteAnnotationsByPostId = async (postId: string) => {

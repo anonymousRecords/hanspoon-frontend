@@ -8,7 +8,8 @@ export type HighlightSyncMessage =
 			timestamp: number;
 	  }
 	| { type: "HIGHLIGHT_DELETED"; id: string; timestamp: number }
-	| { type: "POST_ADDED"; postId: string; timestamp: number };
+	| { type: "POST_ADDED"; postId: string; timestamp: number }
+	| { type: "POST_DELETED"; postId: string; timestamp: number };
 
 class HighlightBroadcastChannel {
 	private channel: BroadcastChannel;
