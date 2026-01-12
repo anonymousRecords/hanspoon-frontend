@@ -57,7 +57,6 @@ export const CardMoreGuestDropdown = ({ post }: CardMoreGuestDropdownProps) => {
 			await deletePost(post.id);
 
 			alert("포스트가 삭제되었습니다.");
-			// TODO: 목록 새로고침 필요 (부모 컴포넌트에 알려야 함)
 		} catch (error) {
 			console.error("포스트 삭제 실패:", error);
 			alert("포스트 삭제에 실패했습니다.");
