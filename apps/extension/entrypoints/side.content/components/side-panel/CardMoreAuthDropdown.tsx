@@ -110,13 +110,32 @@ export const CardMoreAuthDropdown = ({ post }: CardMoreAuthDropdownProps) => {
 	return (
 		<Dropdown
 			trigger={
-				<img
-					src={menuDots}
-					width={12}
-					height={12}
-					alt="menu-dot"
-					style={{ cursor: "pointer" }}
-				/>
+				/** biome-ignore lint/a11y/noStaticElementInteractions: Dropdown trigger with hover effect */
+				<div
+					style={{
+						padding: "6px",
+						borderRadius: "4px",
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+						transition: "background-color 0.2s",
+						cursor: "pointer",
+					}}
+					onMouseEnter={(e) => {
+						e.currentTarget.style.backgroundColor = "#f3f4f6";
+					}}
+					onMouseLeave={(e) => {
+						e.currentTarget.style.backgroundColor = "transparent";
+					}}
+				>
+					<img
+						src={menuDots}
+						width={12}
+						height={12}
+						alt="menu-dot"
+						style={{ display: "block" }}
+					/>
+				</div>
 			}
 			items={menuItems}
 			position="bottom-right"
