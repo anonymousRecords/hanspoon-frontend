@@ -120,12 +120,10 @@ export const getPostById = async (id: string): Promise<LocalPost> => {
 	return post;
 };
 
-export const getPostByUrl = async (url: string): Promise<LocalPost> => {
+export const getPostByUrl = async (
+	url: string,
+): Promise<LocalPost | undefined> => {
 	const post = await sendMessage("DB_GET_POST_BY_URL", { url });
-
-	if (post === undefined) {
-		throw Error(`[HighlightService] Failed to read: DB_GET_POST_BY_URL`);
-	}
 
 	return post;
 };
@@ -145,5 +143,14 @@ export const deletePost = async (postId: string) => {
 
 	if (!response?.success) {
 		throw Error(`[HighlightService] Failed to delete: DB_DELETE_POST`);
+	}
+};
+
+// 로그인
+export const saveLoginSession = async (session: unknown) => {
+	const response = await sendMessage("LOGIN_SUCCESS", { session });
+
+	if (!response?.success) {
+		throw Error(`[AuthService] Failed to save: LOGIN_SUCCESS`);
 	}
 };
