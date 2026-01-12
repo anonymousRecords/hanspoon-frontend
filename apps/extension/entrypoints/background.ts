@@ -147,7 +147,7 @@ export default defineBackground({
 			return post;
 		});
 
-		onMessage("DB_UPDATE_ANNOTATIONS_BY_POST_ID", async (message) => {
+		onMessage("DB_UPDATE_ALL_HIGHLIGHTS_BY_POST_ID", async (message) => {
 			const { postId, updates } = message.data;
 			await updateAllHighlightsByPostIdBackground(postId, updates);
 			return { success: true };

@@ -48,7 +48,7 @@ export const updateHighlightsByPostId = async (
 	postId: string,
 	updates: Partial<LocalAnnotation>,
 ) => {
-	const response = await sendMessage("DB_UPDATE_ANNOTATIONS_BY_POST_ID", {
+	const response = await sendMessage("DB_UPDATE_ALL_HIGHLIGHTS_BY_POST_ID", {
 		postId,
 		updates,
 	});
