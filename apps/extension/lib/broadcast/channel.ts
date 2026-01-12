@@ -22,9 +22,15 @@ class HighlightBroadcastChannel {
 		this.channel.postMessage(message);
 	}
 
-	onMessage(callback: (message: HighlightSyncMessage) => void) {
-		this.channel.onmessage = (event: MessageEvent<HighlightSyncMessage>) => {
+	addEventListener(callback: (message: HighlightSyncMessage) => void) {
+		const handler = (event: MessageEvent<HighlightSyncMessage>) => {
 			callback(event.data);
+		};
+
+		this.channel.addEventListener("message", handler);
+
+		return () => {
+			this.channel.removeEventListener("message", handler);
 		};
 	}
 

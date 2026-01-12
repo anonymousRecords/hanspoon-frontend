@@ -1,6 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useState } from "react";
 import { getAllPosts } from "@/apis/fetcher";
+import type { HighlightSyncMessage } from "@/lib/broadcast/channel";
 import { getBroadcastChannel } from "@/lib/broadcast/channel";
 import { PostCard } from "./PostCard";
 
@@ -10,11 +11,16 @@ export const SidePanelPostList = () => {
 
 	useEffect(() => {
 		const channel = getBroadcastChannel();
-		channel.onMessage((message) => {
+
+		const handleMessage = (message: HighlightSyncMessage) => {
 			if (message.type === "POST_ADDED" || message.type === "POST_DELETED") {
 				setRefreshKey((prev) => prev + 1);
 			}
-		});
+		};
+
+		const removeListener = channel.addEventListener(handleMessage);
+
+		return removeListener;
 	}, []);
 
 	if (allPosts === undefined) {

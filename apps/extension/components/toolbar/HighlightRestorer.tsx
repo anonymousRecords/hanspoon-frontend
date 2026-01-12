@@ -39,10 +39,9 @@ export function HighlightRestorer() {
 			setSyncTrigger((prev) => prev + 1);
 		};
 
-		channel.onMessage(handleMessage);
+		const removeListener = channel.addEventListener(handleMessage);
 
-		return () => {
-		};
+		return removeListener;
 	}, []);
 
 	useEffect(() => {
