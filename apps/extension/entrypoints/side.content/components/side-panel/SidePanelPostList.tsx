@@ -1,9 +1,21 @@
 import { useLiveQuery } from "dexie-react-hooks";
+import { useEffect, useState } from "react";
 import { getAllPosts } from "@/apis/fetcher";
+import { getBroadcastChannel } from "@/lib/broadcast/channel";
 import { PostCard } from "./PostCard";
 
 export const SidePanelPostList = () => {
-	const allPosts = useLiveQuery(getAllPosts);
+	const [refreshKey, setRefreshKey] = useState(0);
+	const allPosts = useLiveQuery(getAllPosts, [refreshKey]);
+
+	useEffect(() => {
+		const channel = getBroadcastChannel();
+		channel.onMessage((message) => {
+			if (message.type === "POST_ADDED") {
+				setRefreshKey((prev) => prev + 1);
+			}
+		});
+	}, []);
 
 	if (allPosts === undefined) {
 		return null;

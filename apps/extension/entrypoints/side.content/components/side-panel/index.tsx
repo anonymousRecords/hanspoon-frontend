@@ -1,6 +1,4 @@
-import { useCurrentPost } from "../../hooks/useCurrentPost";
 import type { TabType } from "../FloatingTab";
-import { CurrentPost } from "./CurrentPost";
 import { SidePanelFooter } from "./SidePanelFooter";
 import { SidePanelHeader } from "./SidePanelHeader";
 import { SidePanelPostList } from "./SidePanelPostList";

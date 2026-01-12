@@ -95,6 +95,12 @@ export const addPost = async (data: LocalPost) => {
 		throw new Error(`DB Error: Post add failed`);
 	}
 
+	getBroadcastChannel().postMessage({
+		type: "POST_ADDED",
+		postId: data.id,
+		timestamp: performance.timeOrigin + performance.now(),
+	});
+
 	return data;
 };
 
