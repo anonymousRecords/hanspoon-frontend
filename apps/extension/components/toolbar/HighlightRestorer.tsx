@@ -1,12 +1,14 @@
-import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useState } from "react";
 import { getAllHighlightsByPostId, getPostByUrl } from "@/apis/fetcher";
 import { useCurrentUrl } from "@/hooks/useCurrentUrl";
+import { useSyncMessage } from "@/hooks/useSyncMessage";
 import type { HighlightSyncMessage } from "@/lib/broadcast/channel";
-import { getBroadcastChannel } from "@/lib/broadcast/channel";
 import { deserializeRange } from "@/lib/highlight/deserialization";
 import { appendHighlightTag } from "@/lib/highlight/highlight";
-import type { SerializedHighlight } from "@/lib/highlight/types";
+import type {
+	LocalAnnotation,
+	SerializedHighlight,
+} from "@/lib/highlight/types";
 import { syncMetrics } from "@/lib/metrics/syncMetrics";
 
 export function HighlightRestorer() {
@@ -15,6 +17,7 @@ export function HighlightRestorer() {
 		null,
 	);
 	const [postId, setPostId] = useState<string | null>(null);
+	const [allHighlights, setAllHighlights] = useState<LocalAnnotation[]>([]);
 	const currentUrl = useCurrentUrl();
 
 	useEffect(() => {
@@ -25,24 +28,59 @@ export function HighlightRestorer() {
 		fetchPostId();
 	}, [currentUrl]);
 
-	const allHighlights = useLiveQuery(
-		() => (postId ? getAllHighlightsByPostId(postId) : Promise.resolve([])),
-		[syncTrigger, postId],
-	);
-
 	useEffect(() => {
-		const channel = getBroadcastChannel();
-
-		const handleMessage = (message: HighlightSyncMessage) => {
-			console.log("📡 BroadcastChannel message received:", message);
-			setPendingSync(message);
-			setSyncTrigger((prev) => prev + 1);
+		const fetchHighlights = async () => {
+			if (!postId) {
+				setAllHighlights([]);
+				return;
+			}
+			const highlights = await getAllHighlightsByPostId(postId);
+			setAllHighlights(highlights || []);
 		};
+		fetchHighlights();
+	}, [postId]);
 
-		const removeListener = channel.addEventListener(handleMessage);
+	useSyncMessage(
+		["HIGHLIGHT_ADDED", "HIGHLIGHT_DELETED", "POST_ADDED", "POST_DELETED"],
+		async (message: HighlightSyncMessage) => {
+			if (message.type === "POST_ADDED") {
+				const post = await getPostByUrl(currentUrl);
+				if (post) {
+					setPostId(post.id);
+				}
+				setPendingSync(message);
+				setSyncTrigger((prev) => prev + 1);
+				return;
+			}
 
-		return removeListener;
-	}, []);
+			if (message.type === "POST_DELETED") {
+				if (message.postId === postId) {
+					setAllHighlights([]);
+					setPostId(null);
+
+					const existingHighlights = document.querySelectorAll(
+						"[data-highlight-id]",
+					);
+
+					existingHighlights.forEach((el) => {
+						const parent = el.parentNode;
+						if (parent) {
+							const textNode = document.createTextNode(el.textContent || "");
+							parent.replaceChild(textNode, el);
+							parent.normalize();
+						}
+					});
+
+					return;
+				}
+			}
+
+			setPendingSync(message);
+			setSyncTrigger((prev) => {
+				return prev + 1;
+			});
+		},
+	);
 
 	useEffect(() => {
 		if (!allHighlights || allHighlights.length === 0) return;

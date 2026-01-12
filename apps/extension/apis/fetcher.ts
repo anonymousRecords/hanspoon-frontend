@@ -1,4 +1,3 @@
-import { getBroadcastChannel } from "@/lib/broadcast/channel";
 import type {
 	LocalAnnotation,
 	LocalPost,
@@ -18,13 +17,6 @@ export const saveHighlight = async ({
 		throw new Error(`DB Error: Highlight save failed`);
 	}
 
-	getBroadcastChannel().postMessage({
-		type: "HIGHLIGHT_ADDED",
-		id: data.id,
-		postId,
-		timestamp: performance.timeOrigin + performance.now(),
-	});
-
 	return { postId };
 };
 
@@ -33,12 +25,6 @@ export const deleteHighlight = async (id: string) => {
 	if (!response?.success) {
 		throw new Error(`DB Error: Highlight delete failed`);
 	}
-
-	getBroadcastChannel().postMessage({
-		type: "HIGHLIGHT_DELETED",
-		id,
-		timestamp: performance.timeOrigin + performance.now(),
-	});
 };
 
 export const getAllHighlights = async (): Promise<
@@ -95,12 +81,6 @@ export const addPost = async (data: LocalPost) => {
 		throw new Error(`DB Error: Post add failed`);
 	}
 
-	getBroadcastChannel().postMessage({
-		type: "POST_ADDED",
-		postId: data.id,
-		timestamp: performance.timeOrigin + performance.now(),
-	});
-
 	return data;
 };
 
@@ -119,12 +99,6 @@ export const deletePost = async (postId: string) => {
 	if (!response?.success) {
 		throw new Error(`DB Error: Post delete failed`);
 	}
-
-	getBroadcastChannel().postMessage({
-		type: "POST_DELETED",
-		postId,
-		timestamp: performance.timeOrigin + performance.now(),
-	});
 };
 
 export const deleteAnnotationsByPostId = async (postId: string) => {

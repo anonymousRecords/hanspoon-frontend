@@ -1,3 +1,4 @@
+import type { HighlightSyncMessage } from "../lib/broadcast/channel";
 import type {
 	LocalAnnotation,
 	LocalPost,
@@ -5,6 +6,25 @@ import type {
 } from "../lib/highlight/types";
 import { db } from "../models/db";
 import { onMessage } from "../utils/message";
+
+const broadcastToAll = (message: HighlightSyncMessage) => {
+	browser.tabs.query({}, (tabs) => {
+		for (const tab of tabs) {
+			if (tab.id) {
+				browser.tabs
+					.sendMessage(tab.id, message)
+					.then(() => {
+						console.log(`✅ Message sent to tab ${tab.id}:`, message.type);
+					})
+					.catch((error) => {
+						console.log(`❌ Failed to send to tab ${tab.id}:`, error.message);
+					});
+			}
+		}
+	});
+
+	browser.runtime.sendMessage(message).catch(() => {});
+};
 
 const addHightLightBackground = async ({
 	data,
@@ -80,12 +100,27 @@ export default defineBackground({
 		onMessage("DB_SAVE_HIGHLIGHT", async (message) => {
 			const { data, postId } = message.data;
 			await addHightLightBackground({ data, postId });
+
+			broadcastToAll({
+				type: "HIGHLIGHT_ADDED",
+				id: data.id,
+				postId,
+				timestamp: performance.timeOrigin + performance.now(),
+			});
+
 			return { success: true };
 		});
 
 		onMessage("DB_DELETE_HIGHLIGHT", async (message) => {
 			const { id } = message.data;
 			await deleteHighlightBackground(id);
+
+			broadcastToAll({
+				type: "HIGHLIGHT_DELETED",
+				id,
+				timestamp: performance.timeOrigin + performance.now(),
+			});
+
 			return { success: true };
 		});
 
@@ -126,6 +161,13 @@ export default defineBackground({
 		onMessage("DB_ADD_POST", async (message) => {
 			const { postData } = message.data;
 			await addPostBackground(postData);
+
+			broadcastToAll({
+				type: "POST_ADDED",
+				postId: postData.id,
+				timestamp: performance.timeOrigin + performance.now(),
+			});
+
 			return { success: true };
 		});
 
@@ -138,12 +180,26 @@ export default defineBackground({
 		onMessage("DB_DELETE_POST", async (message) => {
 			const { postId } = message.data;
 			await deletePostBackground(postId);
+
+			broadcastToAll({
+				type: "POST_DELETED",
+				postId,
+				timestamp: performance.timeOrigin + performance.now(),
+			});
+
 			return { success: true };
 		});
 
 		onMessage("DB_DELETE_ANNOTATIONS_BY_POST_ID", async (message) => {
 			const { postId } = message.data;
 			await deleteAnnotationsByPostIdBackground(postId);
+
+			broadcastToAll({
+				type: "ANNOTATIONS_DELETED",
+				postId,
+				timestamp: performance.timeOrigin + performance.now(),
+			});
+
 			return { success: true };
 		});
 
