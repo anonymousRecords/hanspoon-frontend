@@ -46,20 +46,7 @@ export const EditModeUI = () => {
 					cursor: "pointer",
 				}}
 			>
-				하이라이트 취소
-			</button>
-
-			<span style={{ opacity: 0.5 }}>|</span>
-			<button
-				type="button"
-				style={{
-					background: "none",
-					border: "none",
-					color: "inherit",
-					cursor: "pointer",
-				}}
-			>
-				메모
+				Unhighlight
 			</button>
 		</div>
 	);

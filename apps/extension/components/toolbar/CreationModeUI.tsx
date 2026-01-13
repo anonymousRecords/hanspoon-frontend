@@ -60,20 +60,7 @@ export const CreationModeUI = ({
 					cursor: "pointer",
 				}}
 			>
-				하이라이트
-			</button>
-
-			<span style={{ opacity: 0.5 }}>|</span>
-			<button
-				type="button"
-				style={{
-					background: "none",
-					border: "none",
-					color: "inherit",
-					cursor: "pointer",
-				}}
-			>
-				메모
+				Highlight
 			</button>
 		</div>
 	);

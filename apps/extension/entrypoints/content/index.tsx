@@ -9,8 +9,6 @@ export default defineContentScript({
 	cssInjectionMode: "ui",
 
 	async main(ctx) {
-		console.log("HELLO");
-
 		const ui = await createShadowRootUi(ctx, {
 			name: "hanspoon-toolbar",
 			position: "inline",
