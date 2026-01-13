@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlighter Extension Sandbox - 기술적 엣지 케이스</title>
+    <style>
+        :root { --highlight-color: #E9D2FD; }
+        body { font-family: sans-serif; line-height: 1.6; padding: 50px; color: #333; }
+        .test-section { border: 2px solid #eee; padding: 20px; margin-bottom: 40px; border-radius: 12px; }
+        .section-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; color: #6200ee; border-bottom: 2px solid #6200ee; display: inline-block; }
+        
+        /* Case 1: Mixed Nodes */
+        .mixed-box { background: #f9f9f9; padding: 15px; border-radius: 8px; }
+        
+        /* Case 2: Scroll Position */
+        .scroll-outer { height: 150px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; position: relative; }
+        .scroll-content { height: 500px; padding-top: 50px; }
+
+        /* Case 3: CSS Transform */
+        .transform-box { 
+            transform: scale(0.9) rotate(-1deg) translateX(20px); 
+            background: #fff0f0; padding: 20px; margin: 20px 0;
+            border: 1px solid #ff7e7e;
+        }
+
+        /* Case 4: Performance / Load */
+        .load-container { max-height: 200px; overflow-y: auto; font-size: 0.9rem; background: #f0f4f8; padding: 10px; }
+        .load-item { margin-bottom: 4px; border-bottom: 1px solid #e0e0e0; }
+
+        /* Image for Exclusion Test */
+        .test-image { width: 200px; height: 100px; background: #ddd; display: flex; align-items: center; justify-content: center; margin: 10px 0; }
+        
+        /* Highlight Style */
+        .hanspoon-highlight { background-color: var(--highlight-color) !important; }
+    </style>
+</head>
+<body>
+    <h1>🛠 익스텐션 기술 검증 샌드박스</h1>
+
+    <section class="test-section" id="core-mixed-test">
+        <div class="section-title">1. 공통 핵심 & Mixed Nodes</div>
+        <p class="description">기본 툴바 노출, 색상(#E9D2FD), 그리고 태그가 뒤섞인 문장 선택을 테스트합니다.</p>
+        <div class="mixed-box" id="target-mixed">
+            이 문장은 <strong>두꺼운 글씨</strong>와 <em>기울임</em>, 그리고 <a href="#">링크 텍스트</a>가 섞여 있어 <span>DOM 노드가 잘게</span> 쪼개져 있습니다. 이 전체를 한 번에 하이라이트 하세요.
+        </div>
+        <div class="test-image" id="target-image">이미지 영역 (드래그 금지)</div>
+    </section>
+
+    <section class="test-section" id="scroll-test">
+        <div class="section-title">2. Scroll Position (Internal)</div>
+        <p class="description">부모 요소에 스크롤이 있을 때 툴바 좌표가 정확한지 확인합니다.</p>
+        <div class="scroll-outer" id="target-scroll-container">
+            <div class="scroll-content">
+                <p>중간 더미 텍스트...</p>
+                <p id="target-scroll-text" style="background: yellow;">[스크롤 타겟] 스크롤을 내려서 이 문장을 하이라이트 하세요.</p>
+                <p>아래쪽 더미 텍스트...</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="test-section" id="transform-test">
+        <div class="section-title">3. CSS Transform (Scale/Rotate)</div>
+        <p class="description">Transform이 적용된 레이아웃에서 툴바 위치 이탈 여부를 확인합니다.</p>
+        <div class="transform-box">
+            <p id="target-transform">Transform이 적용된 텍스트입니다. 툴바가 엉뚱한 곳에 뜨지 않나요?</p>
+        </div>
+    </section>
+
+    <section class="test-section" id="load-test">
+        <div class="section-title">4. 성능 및 부하 테스트 (100개 반복)</div>
+        <p class="description">많은 수의 하이라이트가 동시에 렌더링될 때의 렉(Jank)을 측정합니다.</p>
+        <div class="load-container" id="load-container">
+            </div>
+    </section>
+
+    <script>
+        // 부하 테스트를 위한 100개 문장 생성
+        const container = document.getElementById('load-container');
+        for (let i = 1; i <= 100; i++) {
+            const div = document.createElement('div');
+            div.className = 'load-item';
+            div.id = `load-item-${i}`;
+            div.textContent = `${i}. 한스푼에 많은 관심 가져주시고, 자주 이용해 주세요.`;
+            container.appendChild(div);
+        }
+
+        // 특정 ID 하이라이트 삭제 기능을 위한 이벤트 리스너 (선택 사항)
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'CHECK_MEMORY') {
+                console.log('메모리 체크 로그 출력...');
+            }
+        });
+    </script>
+</body>
+</html>
