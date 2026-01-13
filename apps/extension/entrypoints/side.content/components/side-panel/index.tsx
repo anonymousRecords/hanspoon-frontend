@@ -1,5 +1,4 @@
 import type { TabType } from "../FloatingTab";
-import { SidePanelFooter } from "./SidePanelFooter";
 import { SidePanelHeader } from "./SidePanelHeader";
 import { SidePanelPostList } from "./SidePanelPostList";
 
@@ -52,7 +51,6 @@ export const SidePanel = ({
 
 				{activeTab === "hanspoon" && <SidePanelPostList />}
 			</div>
-			<SidePanelFooter />
 		</div>
 	);
 };
