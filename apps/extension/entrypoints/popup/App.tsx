@@ -1,7 +1,7 @@
 import { BlinkingText } from "@/components/common/BlinkingText";
 import logo from "../../public/logo.svg";
-import { usePopupFloatingButtonConfig } from "./hooks/usePopupFloatingButtonConfig";
 import { LoadingDots } from "./components/LoadingDots";
+import { usePopupFloatingButtonConfig } from "./hooks/usePopupFloatingButtonConfig";
 
 const App = () => {
 	const {
@@ -35,77 +35,102 @@ const App = () => {
 	const allEnabled = globallyEnabled && siteEnabled;
 
 	return (
-		<div
-			style={{
-				padding: "16px",
-				width: "160px",
-				display: "flex",
-				flexDirection: "column",
-				gap: "12px",
-			}}
-		>
+		<>
 			<div
 				style={{
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					gap: "8px",
-				}}
-			>
-				<img src={logo} width={48} height={48} alt="logo" />
-			</div>
-
-			<section
-				style={{
+					padding: "16px",
+					width: "160px",
 					display: "flex",
 					flexDirection: "column",
-					gap: "8px",
+					gap: "12px",
 				}}
 			>
-				{!globallyEnabled && (
-					<button
-						type="button"
-						onClick={enableGlobally}
-						className="blink-parent"
-						style={{
-							cursor: "pointer",
-							fontWeight: "bold",
-						}}
-					>
-						<BlinkingText pauseOnParentHover>{">"}</BlinkingText>
-						&nbsp;전역 활성화
-					</button>
-				)}
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+						gap: "8px",
+					}}
+				>
+					<img
+						className="floating-logo"
+						src={logo}
+						width={48}
+						height={48}
+						alt="logo"
+					/>
+				</div>
+				<section
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						gap: "8px",
+					}}
+				>
+					{!globallyEnabled && (
+						<button
+							type="button"
+							onClick={enableGlobally}
+							className="blink-parent"
+							style={{
+								cursor: "pointer",
+								fontWeight: "bold",
+							}}
+						>
+							<BlinkingText pauseOnParentHover>{">"}</BlinkingText>
+							&nbsp;전역 활성화
+						</button>
+					)}
 
-				{globallyEnabled && !siteEnabled && currentTabDomain && (
-					<button
-						type="button"
-						onClick={enableForCurrentSite}
-						className="blink-parent"
-						style={{
-							cursor: "pointer",
-							fontWeight: "bold",
-						}}
-					>
-						<BlinkingText pauseOnParentHover>{">"}</BlinkingText>
-						&nbsp;{currentTabDomain} 활성화
-					</button>
-				)}
+					{globallyEnabled && !siteEnabled && currentTabDomain && (
+						<button
+							type="button"
+							onClick={enableForCurrentSite}
+							className="blink-parent"
+							style={{
+								cursor: "pointer",
+								fontWeight: "bold",
+							}}
+						>
+							<BlinkingText pauseOnParentHover>{">"}</BlinkingText>
+							&nbsp;{currentTabDomain} 활성화
+						</button>
+					)}
 
-				{allEnabled && (
-					<div
-						style={{
-							padding: "12px",
-							textAlign: "center",
-							fontWeight: "bold",
-						}}
-					>
-						모든 사이트에서 <br />
-						한스푼 활성화 중<LoadingDots />
-					</div>
-				)}
-			</section>
-		</div>
+					{allEnabled && (
+						<div
+							style={{
+								padding: "12px",
+								textAlign: "center",
+								fontWeight: "bold",
+							}}
+						>
+							모든 사이트에서 <br />
+							한스푼 활성화 중<LoadingDots />
+						</div>
+					)}
+				</section>
+			</div>
+
+			<style>{`
+			@keyframes float {
+				0% {
+					transform: translateY(0px);
+				}
+				50% {
+					transform: translateY(-2px);
+				}
+				100% {
+					transform: translateY(0px);
+				}
+			}
+
+			.floating-logo {
+				animation: float 2.5s ease-in-out infinite;
+			}
+`}</style>
+		</>
 	);
 };
 
