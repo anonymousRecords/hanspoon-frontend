@@ -1,6 +1,7 @@
 import { BlinkingText } from "@/components/common/BlinkingText";
 import logo from "../../public/logo.svg";
 import { usePopupFloatingButtonConfig } from "./hooks/usePopupFloatingButtonConfig";
+import { LoadingDots } from "./components/LoadingDots";
 
 const App = () => {
 	const {
@@ -100,7 +101,7 @@ const App = () => {
 						}}
 					>
 						모든 사이트에서 <br />
-						한스푼 활성화 중...
+						한스푼 활성화 중<LoadingDots />
 					</div>
 				)}
 			</section>
