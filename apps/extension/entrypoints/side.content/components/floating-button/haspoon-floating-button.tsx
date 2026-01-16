@@ -65,7 +65,7 @@ export const HanspoonFloatingButton = ({
 					</button>
 				}
 				items={menuItems}
-				position="top-right"
+				position="bottom-left"
 			/>
 			<button
 				type="button"
@@ -76,7 +76,6 @@ export const HanspoonFloatingButton = ({
 					height: "34px",
 					borderTopLeftRadius: "30px",
 					borderBottomLeftRadius: "30px",
-					// backgroundColor: "#4ade80",
 					backgroundColor: "white",
 					border: "none",
 					cursor: isDragging ? "grabbing" : "grab",

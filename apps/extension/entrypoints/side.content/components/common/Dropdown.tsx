@@ -1,4 +1,10 @@
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+	type ReactNode,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import { createPortal } from "react-dom";
 
 export interface DropdownMenuItem {
@@ -25,7 +31,10 @@ export const Dropdown = ({
 	itemClassName = "",
 }: DropdownProps) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+	const [menuPosition, setMenuPosition] = useState<{
+		top: number;
+		left: number;
+	} | null>(null);
 	const triggerRef = useRef<HTMLDivElement>(null);
 	const menuRef = useRef<HTMLDivElement>(null);
 
@@ -53,12 +62,13 @@ export const Dropdown = ({
 		}
 	}, [isOpen]);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (isOpen && triggerRef.current) {
 			const rect = triggerRef.current.getBoundingClientRect();
 			const menuWidth = 200;
 			const menuHeight = 150;
 			const gap = 8;
+			const padding = 8;
 
 			let top = 0;
 			let left = 0;
@@ -82,22 +92,45 @@ export const Dropdown = ({
 					break;
 			}
 
+			const viewportWidth = window.innerWidth;
+			const viewportHeight = window.innerHeight;
+
+			if (left + menuWidth > viewportWidth - padding) {
+				left = rect.left - menuWidth - gap;
+			}
+
+			if (left < padding) {
+				left = padding;
+			}
+
+			if (top + menuHeight > viewportHeight - padding) {
+				top = rect.top - menuHeight - gap;
+			}
+
+			if (top < padding) {
+				top = padding;
+			}
+
 			setMenuPosition({ top, left });
+		} else {
+			setMenuPosition(null);
 		}
 	}, [isOpen, position]);
 
-	const menuStyles = {
-		position: "fixed" as const,
-		top: menuPosition.top,
-		left: menuPosition.left,
-		backgroundColor: "white",
-		border: "1px solid #e5e7eb",
-		borderRadius: "8px",
-		boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-		padding: "4px",
-		minWidth: "200px",
-		zIndex: 2147483648,
-	};
+	const menuStyles = menuPosition
+		? {
+				position: "fixed" as const,
+				top: menuPosition.top,
+				left: menuPosition.left,
+				backgroundColor: "white",
+				border: "1px solid #e5e7eb",
+				borderRadius: "8px",
+				boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+				padding: "4px",
+				minWidth: "200px",
+				zIndex: 2147483648,
+			}
+		: null;
 
 	return (
 		<>
@@ -114,6 +147,7 @@ export const Dropdown = ({
 			</div>
 
 			{isOpen &&
+				menuStyles &&
 				createPortal(
 					<div ref={menuRef} style={menuStyles} className={menuClassName}>
 						{items.map((item, index) => {
