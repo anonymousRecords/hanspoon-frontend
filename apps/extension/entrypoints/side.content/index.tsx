@@ -1,5 +1,6 @@
 import { Provider } from "jotai";
 import ReactDOM from "react-dom/client";
+import { ToastProvider } from "./components/common/Toast";
 import { FloatingTab } from "./components/FloatingTab";
 import "./style.css";
 
@@ -19,7 +20,9 @@ export default defineContentScript({
 				const root = ReactDOM.createRoot(wrapper);
 				root.render(
 					<Provider>
-						<FloatingTab />
+						<ToastProvider>
+							<FloatingTab />
+						</ToastProvider>
 					</Provider>,
 				);
 
