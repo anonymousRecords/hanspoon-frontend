@@ -9,6 +9,7 @@ export const SidePanelHeader = ({ setIsOpen }: SidePanelHeaderProps) => {
 				display: "flex",
 				justifyContent: "flex-end",
 				alignItems: "center",
+				padding: "20px",
 			}}
 		>
 			<button

@@ -9,12 +9,7 @@ interface SidePanelProps {
 	activeTab: TabType;
 }
 
-export const SidePanel = ({
-	sideWidth,
-	isOpen,
-	setIsOpen,
-	activeTab,
-}: SidePanelProps) => {
+export const SidePanel = ({ sideWidth, isOpen, setIsOpen }: SidePanelProps) => {
 	// const { currentPost } = useCurrentPost();
 
 	return (
@@ -33,7 +28,6 @@ export const SidePanel = ({
 				display: "flex",
 				flexDirection: "column",
 				borderLeft: "1px solid #e5e7eb",
-				padding: "20px",
 			}}
 		>
 			<SidePanelHeader setIsOpen={setIsOpen} />

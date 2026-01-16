@@ -39,28 +39,7 @@ export const SidePanelPostList = () => {
 	}, [allPosts]);
 
 	if (allPosts.length === 0) {
-		return (
-			<div
-				style={{
-					height: "100%",
-					padding: "20px",
-					textAlign: "center",
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-					justifyContent: "center",
-					color: "#6b7280",
-					fontFamily: "Umdot",
-				}}
-			>
-				<div>
-					ㄴH 공간ㅇl... ㄴㅓ무 비었ㄴl..<BlinkingText>?</BlinkingText>
-				</div>
-				<div>
-					ュ럼... 하나만 '하이라이트' ㅎH줄ㄹH..<BlinkingText>?</BlinkingText>
-				</div>
-			</div>
-		);
+		return <EmptyPostList />;
 	}
 
 	return (
@@ -70,24 +49,16 @@ export const SidePanelPostList = () => {
 				flexDirection: "column",
 				height: "100%",
 				padding: "10px 0px",
+				gap: "8px",
 			}}
 		>
 			<div
 				style={{
-					fontSize: "14px",
-					marginBottom: "8px",
-				}}
-			>
-				모든 포스트
-			</div>
-			<div
-				style={{
 					flex: 1,
 					overflowY: "auto",
-					marginBottom: "20px",
 					display: "flex",
+					marginBottom: "20px",
 					flexDirection: "column",
-					gap: "8px",
 				}}
 			>
 				{allPosts.map((post) => (
@@ -117,4 +88,29 @@ const isHighlightSyncMessage = (
 	}
 
 	return false;
+};
+
+const EmptyPostList = () => {
+	return (
+		<div
+			style={{
+				height: "100%",
+				padding: "20px",
+				textAlign: "center",
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				justifyContent: "center",
+				color: "#6b7280",
+				fontFamily: "Umdot",
+			}}
+		>
+			<div>
+				ㄴH 공간ㅇl... ㄴㅓ무 비었ㄴl..<BlinkingText>?</BlinkingText>
+			</div>
+			<div>
+				ュ럼... 하나만 '하이라이트' ㅎH줄ㄹH..<BlinkingText>?</BlinkingText>
+			</div>
+		</div>
+	);
 };
