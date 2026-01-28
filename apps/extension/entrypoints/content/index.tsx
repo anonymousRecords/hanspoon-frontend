@@ -3,6 +3,7 @@ import "@/lib/metrics/syncMetrics";
 import ReactDOM from "react-dom/client";
 import { highlightSyncStore } from "@/lib/sync/highlightSyncStore";
 import "./style.css";
+import { Provider } from "jotai";
 
 export default defineContentScript({
 	matches: ["<all_urls>"],
@@ -16,7 +17,11 @@ export default defineContentScript({
 			position: "inline",
 			onMount: (container) => {
 				const root = ReactDOM.createRoot(container);
-				root.render(<Toolbar />);
+				root.render(
+					<Provider>
+						<Toolbar />
+					</Provider>,
+				);
 				return root;
 			},
 		});

@@ -107,25 +107,3 @@ export const floatingButtonSettingsAtom = atom(
 	},
 );
 
-function matchDomainPattern(currentDomain: string, pattern: string): boolean {
-	if (currentDomain === pattern) return true;
-
-	if (pattern.startsWith("*.")) {
-		const domainSuffix = pattern.slice(2);
-		return (
-			currentDomain === domainSuffix ||
-			currentDomain.endsWith(`.${domainSuffix}`)
-		);
-	}
-
-	return currentDomain.endsWith(`.${pattern}`);
-}
-
-export function isEnabledForCurrentSite(config: FloatingButtonConfig): boolean {
-	if (!config.enabled) return false;
-
-	const currentDomain = window.location.hostname;
-	return !config.disabledDomains.some((domain) =>
-		matchDomainPattern(currentDomain, domain),
-	);
-}
