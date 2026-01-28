@@ -5,10 +5,10 @@ const DRAG_THRESHOLD = 5;
 
 interface UseDragProps {
 	initialY: number;
-	onClick: () => void;
+	onPureClick: () => void;
 }
 
-export const useDrag = ({ initialY, onClick }: UseDragProps) => {
+export const useDrag = ({ initialY, onPureClick }: UseDragProps) => {
 	const [isDragging, setIsDragging] = useState(false);
 	const [y, setY] = useState(initialY);
 
@@ -33,7 +33,7 @@ export const useDrag = ({ initialY, onClick }: UseDragProps) => {
 
 	const handleClick = () => {
 		if (!hasDragged.current) {
-			onClick?.();
+			onPureClick?.();
 		}
 	};
 

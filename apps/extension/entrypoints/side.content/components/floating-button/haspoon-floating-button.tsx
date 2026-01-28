@@ -1,33 +1,32 @@
 import logo from "../../../../public/logo.svg";
+import { useFloatingButtonStatus } from "../../hooks/useFloatingButtonStatus";
 import { Dropdown, type DropdownMenuItem } from "../common/Dropdown";
 
 interface HanspoonFloatingButtonProps {
 	isDragging: boolean;
 	onClick: () => void;
-	onDisableForSite: () => void;
-	onDisableGlobally: () => void;
 }
 
 export const HanspoonFloatingButton = ({
 	isDragging,
 	onClick,
-	onDisableForSite,
-	onDisableGlobally,
 }: HanspoonFloatingButtonProps) => {
 	const [isHovered, setIsHovered] = useState(false);
+	const { disableForCurrentSite, disableGlobally } = useFloatingButtonStatus();
+
 	const menuItems: DropdownMenuItem[] = [
 		{
 			label: "이 사이트에서 비활성화",
 			onClick: () => {
 				console.log("이 사이트에서 비활성화");
-				onDisableForSite();
+				disableForCurrentSite();
 			},
 		},
 		{
 			label: "전역으로 비활성화",
 			onClick: () => {
 				console.log("전역으로 비활성화");
-				onDisableGlobally();
+				disableGlobally();
 			},
 		},
 	];

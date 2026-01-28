@@ -6,11 +6,10 @@ import { SidePanel } from "./side-panel";
 
 export const FloatingTab = () => {
 	const { isOpen, sideWidth, setIsOpen } = useSidePanel(400);
-	const { isEnabledForCurrentSite, disableForCurrentSite, disableGlobally } =
-		useFloatingButtonStatus();
+	const { isEnabledForCurrentSite } = useFloatingButtonStatus();
 	const { elementRef, handleMouseDown, handleClick, isDragging, y } = useDrag({
 		initialY: 100,
-		onClick: () => setIsOpen(!isOpen),
+		onPureClick: () => setIsOpen(!isOpen),
 	});
 
 	const enabled = isEnabledForCurrentSite();
@@ -20,7 +19,7 @@ export const FloatingTab = () => {
 	}
 
 	return (
-		<div style={{ fontFamily: "system-ui" }}>
+		<div>
 			{/** biome-ignore lint/a11y/noStaticElementInteractions: static */}
 			<div
 				ref={elementRef}
@@ -38,16 +37,7 @@ export const FloatingTab = () => {
 					transition: isDragging ? "none" : "right 0.3s ease",
 				}}
 			>
-				<HanspoonFloatingButton
-					isDragging={isDragging}
-					onClick={handleClick}
-					onDisableForSite={() => {
-						disableForCurrentSite();
-					}}
-					onDisableGlobally={() => {
-						disableGlobally();
-					}}
-				/>
+				<HanspoonFloatingButton isDragging={isDragging} onClick={handleClick} />
 			</div>
 
 			<SidePanel sideWidth={sideWidth} isOpen={isOpen} setIsOpen={setIsOpen} />
