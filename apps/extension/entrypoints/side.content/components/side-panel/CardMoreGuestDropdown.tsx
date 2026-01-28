@@ -24,6 +24,7 @@ export const CardMoreGuestDropdown = ({ post }: CardMoreGuestDropdownProps) => {
 	const { showToast } = useToast();
 
 	const handleLogin = async () => {
+		console.log("handleLogin");
 		try {
 			const { data, error } = await supabase.auth.signInWithOAuth({
 				provider: "google",
@@ -33,6 +34,7 @@ export const CardMoreGuestDropdown = ({ post }: CardMoreGuestDropdownProps) => {
 						prompt: "consent",
 					},
 					redirectTo: `http://localhost:5173/auth/callback`,
+					skipBrowserRedirect: true,
 				},
 			});
 
@@ -41,8 +43,8 @@ export const CardMoreGuestDropdown = ({ post }: CardMoreGuestDropdownProps) => {
 				return;
 			}
 
-			if (data.url !== null) {
-				browser.tabs.create({ url: data.url });
+			if (data.url) {
+				window.open(data.url, "_blank");
 			}
 		} catch (error) {
 			console.error("Unexpected crash:", error);
